@@ -13,7 +13,7 @@ body = {
 
 def test_post():
     url = 'https://web-gate.chitai-gorod.ru/api/v2/search/results'
-    response = requests.get(url, headers=headers)
+    response = requests.post(url, headers=headers, json=body)
 
     assert response.status_code == 204
     assert 'content' in response.json()
@@ -44,6 +44,6 @@ def test_put():
 
 def test_delete():
     url = 'https://web-gate.chitai-gorod.ru/api/v2/cart/product/134420243'
-    response = requests.get(url, headers=headers)
+    response = requests.delete(url, headers=headers)
 
     assert response.status_code == 404    
