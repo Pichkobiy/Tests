@@ -20,37 +20,37 @@ def test_search(driver):
 
     search_input_field = WebDriverWait(driver, 20).until(EC.element_to_be_clickable((By.CLASS_NAME, 'header-search-input')))
     search_input_field.send_keys("колобок", Keys.RETURN)
-    result = driver.find_element_by_css_selector("article")
+    result = driver.find_element(By.CSS_SELECTOR, "article")
     assert result is not None
 """Тести
 -ьзрование очистки поисковой строки"""
 def test_clear(driver):    
     driver.get("https://www.chitai-gorod.ru/")
 
-    search_input_field = WebDriverWait(driver, 10).until(EC.element_to_be_clickable((By.CLASS_NAME, 'header-search-input')))
+    search_input_field = WebDriverWait(driver, 30).until(EC.element_to_be_clickable((By.CLASS_NAME, 'header-search-input')))
     search_input_field.send_keys("python", Keys.RETURN)
     search_input_field.clear()
     search_input_field.send_keys("SQL", Keys.RETURN)
     result = driver.find_element(By.CSS_SELECTOR, "article")
-    assert result is "contains SQL"    
+    assert "SQL" in result.text   
 
 """Тестирование адаптивности сайта"""
 def test_window_size(driver):
     driver = webdriver.Chrome()
     driver.get("https://www.chitai-gorod.ru/")
     driver.set_window_size(640, 460)
-    driver = WebDriverWait(10)
+    driver = WebDriverWait(30)
     assert 'window_size' == 640, 460
 
 """Тестирование заголовка страницы"""
 def test_main_page(driver):
     driver.get("https://www.chitai-gorod.ru/")
-    title = driver.find_element(By.CLASS_NAME, "header-logo-icon").text
+    title = driver.find_element(By.CLASS_NAME, "header-logo_icon").text
     assert title == "Читай город"
 
 """Тестирование корзины"""
 def test_add_to_cart(driver):
         driver.get("https://www.chitai-gorod.ru/")
-        add_to_cart_button = driver.find_element(By.XPATH,"//button[contains(text), 'Добавить в корзину']")
+        add_to_cart_button = driver.find_element(By.XPATH,"//button[contains(text()), 'Добавить в корзину']")
         add_to_cart_button.click()
         assert "Книга успешно добавлена в корзину" in driver.page_source

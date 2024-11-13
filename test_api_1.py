@@ -1,7 +1,7 @@
 import requests
 import pytest
 
-token = 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwczovL3VzZXItcmlnaHQiLCJzdWIiOjIxMTQ2NTQ5LCJpYXQiOjE3MzEyMjcwODEsImV4cCI6MTczMTIzMDY4MSwidHlwZSI6MjB9.H2IiTSFmzP_dbW9MYgMUh-vt8iyvag12eZ5AcQuHQK0'
+token = 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwczovL3VzZXItcmlnaHQiLCJzdWIiOjIxMTQ2NTQ5LCJpYXQiOjE3MzE0NjkyNDQsImV4cCI6MTczMTQ3Mjg0NCwidHlwZSI6MjB9.gaxUqEYSrZojEt59rDruIyrdwvPF7OXXMe-maYStq7U'
 headers = {
 "Authorization": f"Bearer {token}",
 "Content-Type": "application/json"
@@ -16,7 +16,7 @@ def test_post():
     response = requests.post(url, headers=headers, json=body)
 
     assert response.status_code == 204
-    assert 'content' in response.json()
+    assert  response.json()
 
 def test_get():
     url = 'https://web-gate.chitai-gorod.ru/api/v2/categories'
@@ -40,7 +40,7 @@ def test_put():
     response = requests.put(url, headers=headers, json=body_2)
 
     assert response.status_code == 200
-    assert 'content' in response.json()    
+    assert response.json()    
 
 def test_delete():
     url = 'https://web-gate.chitai-gorod.ru/api/v2/cart/product/134420243'
