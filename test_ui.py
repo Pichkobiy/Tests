@@ -5,6 +5,7 @@ from selenium.webdriver.support import expected_conditions as EC
 import pytest
 from selenium.webdriver.common.keys import Keys
 import allure
+from config import *
 
 @pytest.fixture
 def driver():
@@ -16,7 +17,7 @@ def driver():
 
 """Тестирование поисковой строки"""
 def test_search(driver):    
-    driver.get("https://www.chitai-gorod.ru/")
+    driver.get(baseURL)
 
     search_input_field = WebDriverWait(driver, 20).until(EC.element_to_be_clickable((By.CLASS_NAME, 'header-search-input')))
     search_input_field.send_keys("колобок", Keys.RETURN)
@@ -25,7 +26,7 @@ def test_search(driver):
 """Тести
 -ьзрование очистки поисковой строки"""
 def test_clear(driver):    
-    driver.get("https://www.chitai-gorod.ru/")
+    driver.get(baseURL)
 
     search_input_field = WebDriverWait(driver, 30).until(EC.element_to_be_clickable((By.CLASS_NAME, 'header-search-input')))
     search_input_field.send_keys("python", Keys.RETURN)
@@ -37,20 +38,24 @@ def test_clear(driver):
 """Тестирование адаптивности сайта"""
 def test_window_size(driver):
     driver = webdriver.Chrome()
-    driver.get("https://www.chitai-gorod.ru/")
+    driver.get(baseURL)
     driver.set_window_size(640, 460)
     driver = WebDriverWait(30)
-    assert 'window_size' == 640, 460
+
+    window_size = driver.get_window_size()
+    assert window_size['width'] == 640
+    assert window_size['height'] == 460
+    
 
 """Тестирование заголовка страницы"""
 def test_main_page(driver):
-    driver.get("https://www.chitai-gorod.ru/")
+    driver.get(baseURL)
     title = driver.find_element(By.CLASS_NAME, "header-logo_icon").text
     assert title == "Читай город"
 
 """Тестирование корзины"""
 def test_add_to_cart(driver):
-        driver.get("https://www.chitai-gorod.ru/")
-        add_to_cart_button = driver.find_element(By.XPATH,"//button[contains(text()), 'Добавить в корзину']")
+        driver.get(baseURL)
+        add_to_cart_button = driver.find_element(By.XPATH,"//button[contains(text(), 'Добавить в корзину')]")
         add_to_cart_button.click()
         assert "Книга успешно добавлена в корзину" in driver.page_source
